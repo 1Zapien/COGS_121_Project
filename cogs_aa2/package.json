@@ -14,5 +14,8 @@
     "intro.js": "^2.9.3",
     "nodemon": "^1.17.3",
     "sqlite3": "^4.0.0"
+  },
+  "engines": {
+    "node": "8.9.x"
   }
 }

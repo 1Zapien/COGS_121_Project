@@ -1,0 +1,137 @@
+<!--
+This file contains the information for the front page of the website, once the user has logged in. It allows the user to navigate to any of the available pages (conditions, regions, tracking, and the brain model) or logout.
+-->
+<html>
+<head>
+<title>NeuroViz</title>
+
+<script src="jquery-3.3.1.min.js"></script>
+<script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+<link rel="stylesheet" href="../css/style.css"/>
+<link rel="stylesheet" href="../js/intro.js/introjs.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mina">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich">
+
+</head>
+
+<!-- body of html page starts -->
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id = "navbar_color">
+  <a class="navbar-brand" href="home.html">NeuroViz
+    <!--<img src="../img/logo_navbar.png" width="20%" height="auto" class="img-fluid">-->
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav text-center">
+      <li class="nav-item active">
+        <a class="nav-link" href="home.html" > Home <span class="sr-only">(current)</span></a>
+      </li>
+
+    </ul>
+    <ul class="navbar-nav ml-auto">
+       <li class="nav-item active">
+        <a class="nav-link" href="index.html"> Logout <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav> <!-- end of head navbar-->
+
+
+<!--<div id="jobDiv">Hello</div>-->
+
+<div class = "content-wrap">
+    <div class = "content">
+       <section id = "top_row">
+            <div class = "content">
+                <div class = "container">
+                    <div class = "row">
+                        <br><br>
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+
+                        <div class= "col-lg-4 col-md-4 col-sm-4" align="center" data-step="1" data-intro="This is regions" id="home_intro1">
+                           <a href="regions_detail.html" id="region_btn"><img src="../img/reg.png" class ="img-fluid"></a>
+                           <!--<a href="regions_detail.html" id="region_text"><img src="../img/regions_hover.png" class ="img-fluid"></a>-->
+                           
+                        </div>
+
+                        <div class= "col-lg-4 col-md-4 col-sm-4" align="center" data-step="2" data-intro="This is conditions" id="home_intro2">
+                           <a href="conditions.html" id="conditions_btn"><img src="../img/cond.png" class ="img-fluid"></a>
+                           <!--<a href="conditions.html" id="conditions_text"><img src="../img/condition_hover.png" class ="img-fluid"></a>-->
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id = "bottom_row">
+            <div class = "content">
+                <div class = "container">
+                    <div class = "row">
+                        <br><br>
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+
+                        <div class= "col-lg-4 col-md-4 col-sm-4" align="center" data-step="3" data-intro="This is tracking" id="home_intro3">
+                           <a href="tracking.html" id="tracking_btn"><img src="../img/track.png" class ="img-fluid"></a>
+                           <!--<a href="tracking.html" id="tracking_text"><img src="../img/tracking_hover.png" class ="img-fluid"></a>-->
+                        </div>
+
+                        <div class= "col-lg-4 col-md-4 col-sm-4" align="center" data-step="4" data-intro="This is 3D brain model" id="home_intro4">
+                           <a href="brainmodel.html" id="model_btn"><img src="../img/brain.png" class ="img-fluid"></a>
+                           <!--<a href="brainmodel.html" id="model_text"><img src="../img/model_hover.png" class ="img-fluid"></a>-->
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+     </div>
+
+  </div>
+</div>
+
+  <script type="text/javascript">
+
+
+    $(document).ready (
+
+      ///function to determine wether to display into.js
+      function() {
+
+       
+        //check i user has vistited home page already
+        if(!(localStorage.getItem("firstVisit"))){
+          introJs().goToStep(2).start();
+         }
+        localStorage.setItem("firstVisit", true);
+
+
+     
+      }
+    );
+    
+
+
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script type = "text/javascript" src="../js/intro.js/intro.js"></script>
+  <script type="text/javascript">
+     
+  </script>
+</body>
+</html>

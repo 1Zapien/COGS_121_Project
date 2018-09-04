@@ -1,0 +1,119 @@
+<!--
+This is the first page reached when running the site: the login page. If a user has already created an account, it will allow them to login, and if not, it has a feature to take them to the account page to create an account.
+-->
+<!DOCTYPE html>
+<head>
+<title>NeuroViz</title>
+
+
+<script src="jquery-3.3.1.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/login_style.css"/>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mina">
+ <script type="text/javascript"> 
+// jQuery convention for running when the document has been fully loaded:
+$(document).ready(() => {  
+  localStorage.clear();
+
+  //the codoe below get the values that were entered by the user who is loging in and  checks if inromation is in the database
+  $('#submit_btn').click(() => {
+    var userNameInput = document.getElementById("exampleInputEmail1").value;
+    var userPassInput = document.getElementById("exampleInputPassword1").value;
+
+    localStorage.setItem("currentUser", userNameInput);
+    
+      
+    const urlInput = 'users/' + userNameInput;
+
+    $.ajax({
+        url: urlInput,
+        type: 'GET',
+        dataType: 'json',
+        success: (data) => {
+            //user exists
+            if(data.password != userPassInput) {
+                //incorrect password
+                console.log("WRONG password");
+            }
+            else {
+                //direct the user to homepage
+                console.log("CORRECT password");
+                window.location.replace("home.html");
+
+            }
+        },
+    });
+  });
+
+  }); //end of account.html
+
+    //saves username entered
+  $('#submit_btn').click(() => {
+    const userid = $("#exampleInputEmail1").val();
+  });
+
+</script>
+
+</head>
+<body>
+
+  <!-- HOME CONTENT -->
+        <section id = "top_login">
+            <div class = "container">
+                <div class = "row">
+                    <div class = "col-lg-8"></div>
+                    <div class = "col-lg-4"><img src="../img/logo_temp.png" width="70%;"></div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id = "mid_login">
+            <div class = "content">
+                <div class = "container">
+
+                    <div class = "row">
+                        <br><br>
+                        <div class="col-lg-8"></div>
+                        <div class= "col-lg-4" id="login_box">
+                            <br><br>
+                            <form>
+                                <div class="form-group">
+                                    <!-- <label for="exampleInputEmail1">Email address</label> -->
+                                    <input type="userName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Username">
+                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group" id="pw_div">
+                                    <!-- <label for="exampleInputPassword1">Password</label> -->
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                </div>
+                                <button id="submit_btn" type="submit" class="btn btn-outline-primary" >Submit</button>
+                            </form>
+                        </div>
+
+                    </div> 
+
+                    <div class = "row">
+                        <br><br>
+                        <div class="col-lg-8"></div>
+                        <div class= "col-lg-2">
+                            <br><br>
+                            <button id ="signup_btn" type="button" class="btn btn-outline-danger"><a href = "account.html">Signup</a></button>
+                        </div>
+                        <!--
+                        <div class="col-lg-2">
+                            <br><br>
+                            <button id = "fb_btn" type="button" class="btn btn-outline-info">Facebook</button>
+                        </div>-->
+
+                    </div> 
+                </div>
+            </div>
+        </section> 
+
+</body>
+</html>

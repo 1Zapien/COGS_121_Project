@@ -1,0 +1,78 @@
+<!--
+This is home to the brain browser API we've included, which provides a 3D, interactable model of the brain for users to play around with and explore.
+-->
+<!DOCTYPE html>
+<head>
+  <title>NeuroViz</title>
+  <script src="jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style1.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mina">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich">
+
+</head>
+
+<body>
+
+  <!-- start of head nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-light" id = "navbar_color">
+    <a class="navbar-brand" href="home.html">NeuroViz</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav text-center">
+      <li class="nav-item" >
+          <a class="nav-link disabled" href="regions_detail.html">Regions <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled " href="conditions.html">Conditions</a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link disabled" href="tracking.html">Tracking</a>
+      </li>
+      <li class="nav-item active" id="active_nav">
+        <a class="nav-link" href="brainmodel.html">Brain Model</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+       <li class="nav-item active">
+        <a class="nav-link" href="index.html"> Logout <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    </div>
+  </nav>
+  <!-- end of head navbar-->
+
+  <br>
+
+  <br>
+  <!-- this code displays the 3d brain -->
+   <section id = "body_container">
+                  <div class = "content">
+                      <div class = "container">
+                          <div class = "row">
+                              <br><br>
+                              <div class="col-lg-2"></div>
+                              <div class= "col-lg-8">
+                                  <br><br>
+                                  <div class="sketchfab-embed-wrapper" style=" text-align: center; "><iframe width="100%" height="680" src="https://sketchfab.com/models/6da6d56c0b8440f19917e625649e18f6/embed?annotation_cycle=5&amp;autospin=0.2&amp;autostart=1&amp;preload=1" frameborder="0" allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> <a href="https://sketchfab.com/models/6da6d56c0b8440f19917e625649e18f6?utm_medium=embed&utm_source=website&utm_campain=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Anatomy of the Human Brain V4</a> by <a href="https://sketchfab.com/intervoke?utm_medium=embed&utm_source=website&utm_campain=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">INTERVOKE</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_source=website&utm_campain=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a> </p> </div>
+                              </div>
+                              <div class="col-lg-2"></div>
+
+
+                          </div>
+                      </div>
+                  </div>
+     </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+
+</html>

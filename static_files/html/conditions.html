@@ -1,0 +1,353 @@
+<!--
+This houses the basic format and ajax calls for the conditions information. When opened, it defaults to Alzheimer's and allows for in-page reloading between each of the available conditions. This is also the source for the timing javascript functionality.
+-->
+<html>
+<head>
+<title>NeuroViz</title>
+
+<script src="jquery-3.3.1.min.js"></script>
+<script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
+</script>
+<link rel="stylesheet" href="../css/style.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mina">
+<link rel="stylesheet" href="../css/style.css"/>
+
+<!-- javascript for ajax code -->
+<script type="text/javascript">
+  //the code below lets the user switch between information without having to refresh the page using ajax it also tracks the ammount of time the user spent on each of the conditions //
+
+  const currentLoggedInUser = localStorage.getItem("currentUser");
+  const userUrl = 'users/' + currentLoggedInUser;
+
+let timerGoing = false;
+let time = 0;
+let prevPage = '';
+let totalTime = 0;
+function handleTime(currentPage){
+  let currentTime = Date.now();
+  if(timerGoing){
+    totalTime = (currentTime - time)/1000;
+    console.log(totalTime);
+    console.log(prevPage);
+    
+    $.ajax({
+      url: userUrl,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        data.prevPage
+      }
+    });
+    ////
+    $.ajax({
+      // all URLs are relative to http://localhost:3000/
+      url: userUrl,
+      type: 'POST', // <-- this is POST, not GET
+      data: {
+              prevPage: prevPage,
+              totalTime: totalTime,
+            },
+      success: (data) => {
+        $('#status').html(data.message);
+      }
+    });
+    ////
+    // Get existing dtabase time from prevPage
+    // Add totalTime to that
+    // Push new value to database
+    if(prevPage != currentPage){
+    // Add one to prevPage page visits
+    }
+  }else{
+    timerGoing = true;
+  }
+  time = currentTime;
+  prevPage = currentPage;
+};
+$(document).ready(() => {
+  timerGoing = false;
+  /*click request for Alzheimers*/
+  $("#Alzheimers").click(() => {
+    handleTime('Alzheimers');
+    const requestURL = 'conditions/Alzheimers';
+
+    $.ajax({
+      url: requestURL,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        console.log('received data: ', data);
+        if (data.title) {
+          console.log('show this as title: '+ data.title);
+          $('#conditionName').html(data.title);
+          $('#subtitle-content').html(data.subtitle);
+          $('#description-content').html(data.description);
+          $('#symptoms-content').html(data.symptom);
+          $('#treatment-content').html(data.treatment);
+          $('#compare-img').attr('src', data.image);
+        } else {
+          $('#conditionName').html('Condition not available.');
+        }
+      },
+    });
+  });
+  /*end of alzheimers ajax code*/
+  /*click request for Parkinsons*/
+  $("#Parkinsons").click(() => {
+    handleTime ('Parkinsons');
+    const requestURL = 'conditions/Parkinsons';
+    $.ajax({
+      url: requestURL,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        console.log('received data: ', data);
+        if (data.title) {
+          console.log('show this as title: '+ data.title);
+          $('#conditionName').html(data.title);
+          $('#subtitle-content').html(data.subtitle);
+          $('#description-content').html(data.description);
+          $('#symptoms-content').html(data.symptom);
+          $('#treatment-content').html(data.treatment);
+          $('#compare-img').attr('src', data.image);
+        } else {
+          $('#conditionName').html('Condition not available.');
+        }
+      },
+    });
+  });
+  /*end of parkinsons ajax code*/
+  /*click request for Seizure*/
+  $("#Seizure").click(() => {
+    handleTime ('Seizure');
+    const requestURL = 'conditions/Seizure';
+    $.ajax({
+      url: requestURL,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        console.log('received data: ', data);
+        console.log('show this as title: '+ data.title);
+        if (data.title) {
+          $('#conditionName').html(data.title);
+          $('#subtitle-content').html(data.subtitle);
+          $('#description-content').html(data.description);
+          $('#symptoms-content').html(data.symptom);
+          $('#treatment-content').html(data.treatment);
+          $('#compare-img').attr('src', data.image);
+        } else {
+          $('#conditionName').html('Condition not available.');
+        }
+      },
+    });
+  });
+  /*end of seizure ajax code*/
+  /*click request for Stroke*/
+  $("#Stroke").click(() => {
+    handleTime ('stroke');
+    const requestURL = 'conditions/Stroke';
+    $.ajax({
+      url: requestURL,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        console.log('received data: ', data);
+        if (data.title) {
+          console.log('show this as title: '+ data.title);
+          $('#conditionName').html(data.title);
+          $('#subtitle-content').html(data.subtitle);
+          $('#description-content').html(data.description);
+          $('#symptoms-content').html(data.symptom);
+          $('#treatment-content').html(data.treatment);
+          $('#compare-img').attr('src', data.image);
+        } else {
+          $('#conditionName').html('Condition not available.');
+        }
+      },
+    });
+  });
+  /*end of stroke ajax code*/
+  /*click request for ALS*/
+  $("#Als").click(() => {
+    const requestURL = 'conditions/ALS';
+    $.ajax({
+      url: requestURL,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        handleTime('ALS');
+        console.log('received data: ', data);
+        if (data.title) {
+          console.log('show this as title: '+ data.title);
+          $('#conditionName').html(data.title);
+          $('#subtitle-content').html(data.subtitle);
+          $('#description-content').html(data.description);
+          $('#symptoms-content').html(data.symptom);
+          $('#treatment-content').html(data.treatment);
+          $('#compare-img').attr('src', data.image);
+        } else {
+          $('#conditionName').html('Condition not available.');
+        }
+      },
+    });
+  });
+  /*end of als ajax code*/
+  /*click request for MS*/
+  $("#Ms").click(() => {
+    handleTime ('Ms');
+    const requestURL = 'conditions/MS';
+    $.ajax({
+      url: requestURL,
+      type: 'GET',
+      dataType: 'json',
+      success: (data) => {
+        console.log('received data: ', data);
+        if (data.title) {
+          console.log('show this as title: '+ data.title);
+          $('#conditionName').html(data.title);
+          $('#subtitle-content').html(data.subtitle);
+          $('#description-content').html(data.description);
+          $('#symptoms-content').html(data.symptom);
+          $('#treatment-content').html(data.treatment);
+          $('#compare-img').attr('src', data.image);
+        } else {
+          $('#conditionName').html('Condition not available.');
+        }
+      },
+    });
+  });
+  /*end of ms ajax code*/
+});
+</script>
+<!-- end of ajax code -->
+
+</head>
+
+<!-- body of html page -->
+<body>
+
+  <!-- start of head navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id = "navbar_color">
+    <a class="navbar-brand" href="home.html">NeuroViz
+    <!--<img src="../img/logo_navbar.png" width="20%" height="auto" class="img-fluid">-->
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav text-center">
+      <li class="nav-item" >
+          <a class="nav-link disabled" href="regions_detail.html">Regions <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active" id="active_nav">
+        <a class="nav-link " href="conditions.html">Conditions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="tracking.html">Tracking</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="brainmodel.html">Brain Model</a>
+      </li>
+    </ul>
+
+     <ul class="navbar-nav ml-auto">
+       <li class="nav-item active">
+        <a class="nav-link" href="index.html"> Logout <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- end of head navbar-->
+
+<!-- start of page content -->
+        <section id = "top_container">
+            <div class = "content">
+                <div class = "container">
+                    <div class = "row" id="region_btns">
+                    <div class = "col-lg-3"></div>
+                    <div class = "col-lg-6">
+                              <button type="button" class="btn btn-outline-dark" id="Parkinsons"> Parkinson's </button>
+                              <button type="button" class="btn btn-outline-dark" id="Alzheimers"> Alzheimer's </button>
+                              <button type="button" class="btn btn-outline-dark" id="Seizure"> Seizure </button>
+                              <button type="button" class="btn btn-outline-dark" id="Stroke"> Stroke </button>
+                              <button type="button" class="btn btn-outline-dark" id="Als"> A.L.S. </button>
+                              <button type="button" class="btn btn-outline-dark" id="Ms"> M.S. </button>
+                    </div>
+                    <div class = "col-lg-3"></div>
+                </div>
+
+                    <div class = "row">
+                      <div class="col-md">
+                        <div class="jumbotron jumbotron-fluid">
+                          <div class="container" id="top_jumbo">
+                            <h1 class="display-4" id="conditionName">Parkinson's Disease</h1>
+                            <hr>
+                            <p id="subtitle-content"> </p>
+                            
+                              </div>
+                          </div>
+                      </div>
+                    </div> <!-- end of title row-->
+          </section>
+                      <!-- description -->
+          <section id ="body_container">
+            <div class="content">
+              <div class="container">
+
+
+                     <div class="row">
+
+                        <!-- description -->
+                        <div class="col-sm">
+                          <h4> Description </h4>
+                          <br>
+                          <p id="description-content">A disorder of the central nervous system that affects movement, often including tremors.</p>
+                        </div>
+
+                        <div class="col-sm">
+                        <!-- symptoms -->
+                          <h4> Symptoms </h4>
+                          <br>
+                          <p id="symptoms-content">Parkinson's often starts with a tremor in one hand. Other symptoms are slow movement, stiffness, and loss of balance.</p>
+                        </div>
+
+                      </div>
+                      <br>
+                       <div class="row">
+
+                         <!-- treatment -->
+                        <div class="col-sm">
+                          <h4> Treatment </h4>
+                          <br>
+                          <p id="treatment-content">There are many medications available to treat the Parkinson’s symptoms, although none yet
+                            that reverse the effects of the disease. It is common for people with PD to take a variety of
+                            these medications — all at different doses and at different times of day — to manage symptoms.</p>
+                        </div>
+
+                        <!-- comparison image -->
+                        <div class="col-sm">
+                          <h4> Normal vs Affected Brain </h4>
+                          <br>
+                          <img id="compare-img" height="300" class="card-img-top" src="../img/parkinson_brain.jpg" alt="Card image cap">
+                        </div>
+
+                      </div>
+                      <!-- end of content div -->
+              </div>
+          </div>
+        </section> <!-- end of body container -->
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+</html>

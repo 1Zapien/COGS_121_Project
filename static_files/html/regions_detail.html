@@ -1,0 +1,257 @@
+<!--
+This page, much like the conditions page, houses the basic structure of the information for the regions of the brain, which pulls from a database to allocate. Ajax allows for in page reloads between each of the regions and javascript functions track and store the visits and page time on each of the pages.
+-->
+<html>
+<head>
+<title>NeuroViz</title>
+
+<script src="jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/style.css"/>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet"> <!-- stylesheet css--> 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mina">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich">
+<!--<script src="../js/regions.js"></script>-->
+<script type="text/javascript">
+  //the code below lets the user switch between information without having to refresh the page using ajax it also tracks the ammount of time the user spent on each of the regions of the brain  //
+
+  const currentLoggedInUser = localStorage.getItem("currentUser");
+  const userUrl = 'users/' + currentLoggedInUser;
+
+  let timerGoing = false;
+  let time = 0;
+  let prevPage = '';
+  let totalTime = 0;
+  function handleTime(currentPage){
+    let currentTime = Date.now();
+    if(timerGoing){
+      totalTime = (currentTime - time)/1000;
+      console.log(totalTime);
+      console.log(prevPage);
+    
+      $.ajax({
+        url: userUrl,
+        type: 'GET',
+        dataType: 'json',
+        success: (data) => {
+          data.prevPage
+        }
+      });
+    
+
+      $.ajax({
+
+        // all URLs are relative to http://localhost:3000/
+        url: userUrl,
+        type: 'POST', // <-- this is POST, not GET
+        data: {
+                prevPage: prevPage,
+                totalTime: totalTime,
+              },
+        success: (data) => {
+          $('#status').html(data.message);
+        }
+      });
+
+      ////
+      // Get existing dtabase time from prevPage
+      // Add totalTime to that
+      // Push new value to database
+      if(prevPage != currentPage){
+      // Add one to prevPage page visits
+      }
+      
+    }else{
+      timerGoing = true;
+    }
+    time = currentTime;
+    prevPage = currentPage;
+  };
+
+  
+ $(document).ready(() => {
+    timerGoing = false;
+     $('#midbrain').click(() => {
+        
+        handleTime('midbrain');
+        const requestURL = 'options/' + 'Midbrain';
+      
+      $.ajax({
+        url: requestURL,
+        type:'GET',
+        dataType: 'json',
+        success: (data) => {
+           $('#hero_title').html(data.region);
+           //$('#bread_title').html(data.region);
+           $('#lead').html(data.inst);
+           $('#detail_content').html(data.detail);
+           $('#first_img').attr('src', data.img);
+        }
+      })
+     }); //end of midbrain
+     $('#hindbrain').click(() => {
+        handleTime('hindbrain');
+        const requestURL = 'options/' + 'Hindbrain';
+        $.ajax({
+        url: requestURL,
+        type:'GET',
+        dataType: 'json',
+        success: (data) => {
+           $('#hero_title').html(data.region);
+          // $('#bread_title').html(data.region);
+           $('#lead').html(data.inst);
+           $('#detail_content').html(data.detail);
+           $('#first_img').attr('src', data.img);
+        }
+      })
+     }); // end of hindbrain
+    $('#cerebral').click(() => {
+        handleTime('cerebral');
+        const requestURL = 'options/' + 'Cerebral Cortex';
+      $.ajax({
+        url: requestURL,
+        type:'GET',
+        dataType: 'json',
+        success: (data) => {  
+           $('#hero_title').html(data.region);
+           //$('#bread_title').html(data.region);
+           $('#lead').html(data.inst);
+           $('#detail_content').html(data.detail);
+           $('#first_img').attr('src', data.img);
+        }
+      })
+     }); //end of cerebral
+    $('#forebrain').click(() => {
+        handleTime('forebrain');
+        const requestURL = 'options/' + 'Forebrain';
+      $.ajax({
+        url: requestURL,
+        type:'GET',
+        dataType: 'json',
+        success: (data) => {
+           $('#hero_title').html(data.region);
+           //$('#bread_title').html(data.region);
+           $('#lead').html(data.inst);
+           $('#detail_content').html(data.detail);
+           $('#first_img').attr('src', data.img);
+        }
+      })
+     }); //end of forebrain
+ });
+</script> 
+
+</head>
+<body>
+ <nav class="navbar navbar-expand-lg navbar-light bg-light" id = "navbar_color">
+  <a class="navbar-brand" href="home.html">NeuroViz
+    <!--<img src="../img/logo_navbar.png" width="20%" height="auto" class="img-fluid">-->
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav text-center">
+      <li class="nav-item active" id="active_nav">
+          <a class="nav-link" href="regions_detail.html">Regions <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="conditions.html">Conditions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="tracking.html">Tracking</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="brainmodel.html">Brain Model</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+       <li class="nav-item active">
+        <a class="nav-link" href="index.html"> Logout <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav> <!-- end of head navbar-->
+  
+ <div class="row">
+  <div class="col-md">
+    <section>
+      <div class="content">
+        <div class="container">
+          <div class="row" id="region_btns">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-outline-dark" id="hindbrain">hindbrain</button>
+              <button type="button" class="btn btn-outline-dark" id="midbrain">midbrain</button>
+              <button type="button" class="btn btn-outline-dark" id="forebrain">forebrain</button>
+              <button type="button" class="btn btn-outline-dark" id="cerebral">cerebral cortex</button>
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+  <div class="row" id="content_row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-5">
+        <section id ="top_container">
+          <div class="content">
+            <div class="container">
+              <div class="row">
+                <div class="col-md">
+                  <div class="jumbotron jumbotron-fluid">
+                    <div class="container" id="top_jumbo">
+                      <h1 class="display-4" id="hero_title">Hindbrain</h1>
+                      <hr>
+                      <p id="lead">Ancient, posterior part of brain consisting of Medulla, Pons and Cerebellum</p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <section id = "body_container">
+            <div class = "content">
+                <div class = "container">
+                    <div class = "row" id="detail_div">
+                        <br><br>
+                        <!--<div class="col-md-2"></div>-->
+                        <div class="col-md">
+                            <h3 id="detail_title"></h3>
+                            <p id="detail_content">(Latin for “Bridge) Relays info between Cortex & Cerebellum and between Brain & Spinal Cord. Pons (& Medulla) also include Cranial Nerves V through XII that carry sensory/motor info to/from the head. Plus they include Reticular Formation (involved in Arousal) and Raphe System (involved in Sleep)</p>
+                        </div>
+                               
+                        <!--<div class="col-md-2"></div>-->
+                        </div>
+                    </div>
+                  </div>
+            </section>
+          </div>
+
+          <section id="body_container">
+            <div class="content">
+              <div class = "container">
+                <div class="col-lg">
+                  <img id="first_img" src="../img/region/hindbrain.jpg">
+                  <figcaption>Copyright © 2017 Society for Neuroscience</figcaption>
+                </div>
+            </div>
+
+            </div>
+          </section>
+
+  </div>
+</div>
+</body>
+</html>
